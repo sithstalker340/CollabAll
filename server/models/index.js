@@ -34,6 +34,9 @@ Object.keys(db).forEach(function (modelName) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+//Needs this in order to run correctly if the rows had already been created.
+var options = [];
+options.ignoreDuplicates = true;
 
 db.sequelize
     .authenticate()
@@ -50,7 +53,7 @@ db.sequelize
                     {Name: 'Faculty', FriendlyName: 'Faculty', IsActive:true},
                     {Name: 'Captionist', FriendlyName: 'Captionist', IsActive:true},
                     {Name: 'Interpreter', FriendlyName: 'Interpreter', IsActive:true}
-                ]);
+                ], options); 
             }, function (err) {
                 console.log('An error occurred while creating the table:', err);
             });
