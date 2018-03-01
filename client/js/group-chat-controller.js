@@ -110,6 +110,17 @@
                     emitAction(action);
                 };
 
+                $scope.sendMessage = function () {
+                    var action = {
+                        body: $scope.chatMessage,
+                        user: $scope.contactAuthor,
+                        userAvatar: $scope.contactAuthorAvatar,
+                        groupID: $scope.groupID
+                    };
+                    appendChat(action);
+                    emitAction(action);
+                };
+
                 $scope.communicate = function () {
 
                     var action = {

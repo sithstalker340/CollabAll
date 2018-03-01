@@ -84,6 +84,10 @@ io.on('connection', function(socket){
     socket.on('disconnect', function(){
         console.log( socket.name + ' has disconnected from the chat.' + socket.id);
     });
+
+    socket.on('chat', function (message) {
+        console.log(message);
+    });
 });
 
 // start app ===============================================

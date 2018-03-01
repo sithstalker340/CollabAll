@@ -35,17 +35,31 @@
                         {{message.body}}
                     </span>
 
-                    <span ng-if="message.body != 'Discussing:'">
+                    <span ng-if="message.body != 'Discussing:' && message.body.Icon !== undefined">
                     <!-- <span ngfx-speed="fast"  ngfx-flip-in-x="x > 2" ng-if="message.body != 'Discussing:'"> -->
                         <i style="opacity: 1;width: 40px;margin: 2px;  background: {{message.body.BackgroundColor}}; color: {{message.body.TextColor}}"
                             class='{{message.body.Icon}} fa-lg btn' aria-hidden='true' disabled></i>
                         {{message.body.Title}}
                     </span>
 
+                    <span ng-if="message.body.includes() !== undefined && !message.body.includes('Discussing:')">
+                        {{message.body}}
+                    </span>
+
                 </div>
                 <a id="bottom"></a><br><br><br>
             </div>
             </p>
+            <div class="row">
+                <form ng-submit="sendMessage()">
+                    <div class="input-group">
+                        <input type="text" ng-model="chatMessage" class="form-control" autocomplete="off" />
+                        <div class="input-group-btn">
+                            <button class="btn btn-default">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="row" ng-repeat="interjection in groupInterjections track by $index" ng-if="$index%4==0">
                 <div class="col-lg-3 col-md-12 col-sm-12 letter-box"
                      ng-repeat="i in [$index,$index+1,$index+2,$index+3]"
