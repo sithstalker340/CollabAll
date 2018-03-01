@@ -308,7 +308,11 @@
                 function appendChat(message) {
                     $scope.messages.push(message);
                     $window.document.getElementById('messages').scrollTop = messages.scrollHeight
-
+                    var sound = document.getElementById("audio");
+                    //console.log("SCOPE");
+                    //console.log($scope);
+                    //console.log("MESSAGE");
+                    //console.log(message);
                     if(message.body.includes === undefined && message.body.Title==="Communicating!"){
                         $scope.currentCommunicating = message.user;
                     }
@@ -317,8 +321,14 @@
                     }
 
 
-                    $scope.$applyAsync()
-
+                    $scope.$applyAsync();
+                    //console.log($scope.userID);
+                    //console.log($scope);
+                    if($scope.contactAuthor !== message.user){
+                       sound.play(); 
+                       console.log("SOUND PLAYED");
+                    }
+                    
                     if (message.user != $scope.contactAuthor){
                         $window.navigator.vibrate([150,150])
                     }
