@@ -119,6 +119,8 @@
                     };
                     appendChat(action);
                     emitAction(action);
+
+                    $scope.chatMessage = "";
                 };
 
                 $scope.communicate = function () {
