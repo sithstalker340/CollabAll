@@ -309,10 +309,10 @@
                     $scope.messages.push(message);
                     $window.document.getElementById('messages').scrollTop = messages.scrollHeight
                     var sound = document.getElementById("audio");
-                    //console.log("SCOPE");
-                    //console.log($scope);
-                    //console.log("MESSAGE");
-                    //console.log(message);
+                    console.log("SCOPE");
+                    console.log($scope);
+                    console.log("MESSAGE");
+                    console.log(message);
                     if(message.body.includes === undefined && message.body.Title==="Communicating!"){
                         $scope.currentCommunicating = message.user;
                     }
@@ -324,7 +324,7 @@
                     $scope.$applyAsync();
                     //console.log($scope.userID);
                     //console.log($scope);
-                    if($scope.contactAuthor !== message.user){
+                    if($scope.contactAuthor !== message.user && message.body.Title != undefined){
                        sound.play(); 
                        console.log("SOUND PLAYED");
                     }
