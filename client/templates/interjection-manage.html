@@ -33,7 +33,18 @@
                                    id="interjectionPosition"
                                    placeholder="Position" required>
                         </div>
-
+                        <div class="form-group">
+                            <label for="interjectionSound">Interjection Sound</label>
+							<select class="form-control input-lg" ng-model="interjectionSound"
+                                   id="interjectionSound"
+                                   placeholder="Sound" required>
+							  <option value="button-09">Communicating</option>
+							  <option value="beep-09">Slow Down</option>
+							  <option value="button-37">Question</option>
+							  <option value="beep-07">Repeat</option>
+							  <option value="beep-10">Don't Understand</option>
+							</select>
+                        </div>
                         <div class="form-group">
                             <label for="captionist">Associate With Captionist Role</label>
                             <input type="checkbox" id="captionist" name="captionist" ng-model="interjectionCaptionist" ng-checked="interjectionCaptionist">

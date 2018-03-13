@@ -19,7 +19,11 @@
                 TextColor: DataTypes.STRING(50),
                 IncludeCaptionist:DataTypes.BOOLEAN,
                 IncludeInterpreter:DataTypes.BOOLEAN,
-                IsActive: DataTypes.BOOLEAN
+                IsActive: DataTypes.BOOLEAN,
+				Sound: {
+					type: DataTypes.STRING(100),
+					allowNull: false
+				},
             },
             {
                 classMethods: {

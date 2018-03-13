@@ -19,7 +19,7 @@
                 unique: true
             },
             Description: DataTypes.STRING(500),
-            IsActive: DataTypes.BOOLEAN
+            IsActive: DataTypes.BOOLEAN,
         });
         return interjection;
     };

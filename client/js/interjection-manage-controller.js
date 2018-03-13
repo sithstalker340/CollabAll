@@ -59,7 +59,8 @@
                                 InterjectionInterpreter: $scope.interjectionInterpreter,
                                 InterjectionPosition: $scope.interjectionPosition,
                                 GroupId: $scope.groupID,
-                                GroupInterjectionId: $scope.interjectionID
+                                GroupInterjectionId: $scope.interjectionID,
+								InterjectionSound: $scope.interjectionSound
                             })
                             .then(function (response) {
                                 document.getElementById("overlayScreen").style.width = "0%";
@@ -80,7 +81,8 @@
                                 InterjectionCaptionist: $scope.interjectionCaptionist,
                                 InterjectionInterpreter: $scope.interjectionInterpreter,
                                 InterjectionPosition: $scope.interjectionPosition,
-                                GroupId: $scope.groupID
+                                GroupId: $scope.groupID,
+								InterjectionSound: $scope.interjectionSound
                             })
                             .then(function (response) {
                                 document.getElementById("overlayScreen").style.width = "0%";

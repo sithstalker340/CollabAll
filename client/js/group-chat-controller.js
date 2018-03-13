@@ -308,15 +308,21 @@
                 function appendChat(message) {
                     $scope.messages.push(message);
                     $window.document.getElementById('messages').scrollTop = messages.scrollHeight
-                    var sound = document.getElementById("audio");
+                    var sound;
+					if(message.body.Title==="Communicating!"){
+						sound = document.getElementById("button-09");
+					}
+					else{
+						sound = document.getElementById(message.body.Sound);
+					}
                     console.log("SCOPE");
                     console.log($scope);
                     console.log("MESSAGE");
-                    console.log(message);
+                    console.log(message.body.Sound);
                     if(message.body.includes === undefined && message.body.Title==="Communicating!"){
                         $scope.currentCommunicating = message.user;
                     }
-                    else   if(message.body.includes !== undefined &&  message.body.includes("Discussing:")){
+                    else if(message.body.includes !== undefined &&  message.body.includes("Discussing:")){
                         $scope.currentCard = message.body.replace("Discussing:", "");
                     }
 
