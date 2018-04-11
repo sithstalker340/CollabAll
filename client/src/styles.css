@@ -65,3 +65,7 @@ body {
 .icon-button:active {
     color: #3083af;
 }
+
+.no-pointer {
+    cursor: default !important;
+}

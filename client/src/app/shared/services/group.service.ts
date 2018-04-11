@@ -128,6 +128,18 @@ export class GroupService {
             ));
     }
 
+    deleteInterjection(id) {
+        return this.apiService.post('/services/interjection/delete-interjections-for-group', { GroupInterjectionId: id })
+            .pipe(map(
+                data => {
+                    return data;
+                },
+                err => {
+                    return err;
+                }
+            ));
+    }
+
     // Cards
 
     getCardsForGroup(id) {
