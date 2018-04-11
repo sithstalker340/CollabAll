@@ -1,0 +1,77 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/']">Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{ group.Name }} - Group Chat</li>
+    </ol>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ group.Name }} - Group Chat</h5>
+
+        <div class="messages">
+            <div class="message mb-1" *ngFor="let message of messages">
+                <img class="rounded-circle" style="width:40px;margin:2px;" [src]="message.userAvatar" *ngIf="message.userAvatar.length != 0">
+                <i>{{ message.user }}</i>
+                <small>:</small>
+
+                <span *ngIf="doesItStartWith(message.body, 'Discussing:')">
+                    <i style="opacity: 1;width: 40px;margin: 2px;" class='fa fa-window-maximize fa-lg btn btn-default' aria-hidden='true' disabled></i>
+                    {{message.body}}
+                </span>
+
+                <span *ngIf="!doesItStartWith(message.body, 'Discussing:') && message.body.Icon !== undefined">
+                    <span style="margin-left: 4px; margin-right: 4px; padding-left: 8px; padding-right: 4px; padding-bottom: 6px; padding-top: 4px;" [ngStyle]="{ 'background-color': message.body.BackgroundColor, 'color': message.body.TextColor }">
+                        <fa [name]="message.body.Icon" [size]=0.5></fa>
+                    </span>
+                    {{message.body.Title}}
+                </span>
+
+                <span *ngIf="message.body !== undefined && !doesItStartWith(message.body, 'Discussing:') && message.body.Icon === undefined">
+                    {{message.body}}
+                </span>
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-3">
+            <div class="col">
+                <form (ngSubmit)="sendMessage()">
+                    <div class="input-group">
+                        <input type="text" class="form-control" [(ngModel)]="chatMessage" name="chatMessage" placeholder="Chat" autocomplete="off"
+                        />
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-3" *ngFor="let interjection of groupInterjections">
+                <button class="btn btn-block" [ngStyle]="{ 'margin': '5px', 'background-color': interjection.BackgroundColor, 'color': interjection.TextColor }"
+                    (click)="issueInterjection(interjection)">
+                    <fa [name]="interjection.Icon" [size]=2></fa>
+                    <br /> {{interjection.Title}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mt-3">
+    <div class="card-body">
+        <h5 class="card-title">Discussion Cards</h5>
+
+        <div class="row">
+            <div class="col-3" *ngFor="let card of groupCards">
+                <button class="btn btn-block" (click)="discuss(card.ID)">
+                    <h5>{{ card.Title }}</h5>
+                    <p class="m-0">{{ card.Description }}</p>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
