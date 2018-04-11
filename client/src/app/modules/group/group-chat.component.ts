@@ -22,8 +22,8 @@ export class GroupChatComponent {
     groupInterjections = [];
 
     messages = [];
-    currentCommunicator = {};
-    currentCard = {};
+    currentCommunicator = 'None';
+    currentCard = 'None';
 
     communicateInterjection = {
         Title: "Communicating!",
@@ -90,17 +90,27 @@ export class GroupChatComponent {
                 }
             );
 
-        this.socket = io(this.url, { query: this.user.ID });
+        this.socket = io.connect(this.url, { query: this.user.ID });
 
         this.socket.on('connect', (msg) => {
             this.socket.emit('join', this.user.ID);
         });
 
         this.socket.emit('subscribe', { group: this.groupID });
+
+        this.socket.on('new_message', (message) => {
+            if (message.groupID === this.groupID) {
+                this.appendChat(message);
+            }
+        });
     }
 
     ngOnDestroy() {
         this.socket.emit('unsubscribe', { group: this.groupID });
+    }
+
+    emitChat(message) {
+        this.socket.emit('chat', message);
     }
 
     appendChat(message) {
@@ -124,18 +134,22 @@ export class GroupChatComponent {
         };
 
         this.appendChat(action);
+        this.emitChat(action);
     }
 
     sendMessage() {
-        let action = {
-            body: this.chatMessage,
-            user: this.user.FirstName + ' ' + this.user.LastName,
-            userAvatar: this.user.Avatar,
-            groupID: this.groupID
-        };
+        if (this.chatMessage !== '') {
+            let action = {
+                body: this.chatMessage,
+                user: this.user.FirstName + ' ' + this.user.LastName,
+                userAvatar: this.user.Avatar,
+                groupID: this.groupID
+            };
 
-        this.appendChat(action);
-        this.chatMessage = '';
+            this.appendChat(action);
+            this.emitChat(action);
+            this.chatMessage = '';
+        }
     }
 
     communicate() {
@@ -147,6 +161,7 @@ export class GroupChatComponent {
         };
 
         this.appendChat(action);
+        this.emitChat(action);
     }
 
     discuss(cardID) {
@@ -162,6 +177,7 @@ export class GroupChatComponent {
         };
 
         this.appendChat(action);
+        this.emitChat(action);
     }
 
     interject(id) {
@@ -190,6 +206,7 @@ export class GroupChatComponent {
         };
 
         this.appendChat(action);
+        this.emitChat(action);
     }
 
     compare(a, b) {

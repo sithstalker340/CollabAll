@@ -78,6 +78,7 @@ io.on('connection', function(socket){
 
     socket.on('chat', function (message) {
         console.log(message);
+        socket.broadcast.in(message.groupID).emit('new_message', message);
     });
 });
 
