@@ -31,33 +31,21 @@ app.use(bodyParser.urlencoded({extended: true, limit: '10mb' }));
 // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
 app.use(methodOverride('X-HTTP-Method-Override'));
 
-// set the static files location /client/img will be /img for users
-app.use(express.static(__dirname + '/client'));
-
 // routes ==================================================
 //require('./app/routes')(app); // configure our routes
 
 // CORS
 app.use(cors());
 
-// set the static files location /public/img will be /img for users
-app.use(express.static(__dirname + '/client'));
-
 // Use the passport package in our application
-require(__dirname + '/server/config/passport')(passport);
+require(__dirname + '/src/config/passport')(passport);
 app.use(passport.initialize());
 
-
 //Set up the api endpoints
-require(__dirname + '/server/services/index').init(express, app);
+require(__dirname + '/src/services/index').init(express, app);
 
 // --- Sequelize ---
-require(__dirname + '/server/models/index');
-
-app.get('*', function(req, res) {
-    res.sendfile(__dirname + '/client/index.html');
-});
-
+require(__dirname + '/src/models/index');
 
 global.clients = {};
 io.on('connection', function(socket){

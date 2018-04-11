@@ -1,9 +1,9 @@
 module.exports = {
   "development": {
-    "username": "bd8fdea224eabf",
-    "password": "94b5a7d3",
-    "database": "database_dev",
-    "host": "us-cdbr-azure-east2-d.cloudapp.net",
+    "username": "root",
+    "password": "root",
+    "database": "test",
+    "host": "localhost",
 	"storage": "database_dev.sqlite",
     //"dialect": "sqlite"
       "dialect": "mysql"
