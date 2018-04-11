@@ -78,7 +78,7 @@ export class GroupCreateComponent {
                                     }
                                 );
 
-                            this.alert.message = 'Your group has been updated! Redirecting you to the home page in few seconds...';
+                            this.alert.message = 'Your group has been created! Redirecting you to the home page in few seconds...';
 
                             setTimeout((router: Router) => {
                                 this.router.navigate(['']);
