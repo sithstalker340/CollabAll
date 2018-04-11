@@ -19,6 +19,12 @@ export class DashboardComponent {
     ) { }
 
     ngOnInit() {
+        this.getGroups();
+    }
+
+    getGroups() {
+        this.groupSplices = [];
+
         this.groupService.getUserGroups()
             .subscribe(
                 data => {
@@ -37,6 +43,22 @@ export class DashboardComponent {
                     console.log(err);
                 }
             );
+    }
+
+    deleteGroup(id) {
+        if (window.confirm("Group deletion cannot be reverted. Proceed with deleting this group?")) {
+            this.groupService.deleteGroup({
+                GroupId: id
+            })
+                .subscribe(
+                    data => {
+                        this.getGroups();
+                    },
+                    err => {
+                        console.log(err);
+                    }
+                )
+        }
     }
 
     compare(a, b) {

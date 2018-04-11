@@ -91,7 +91,7 @@ export class GroupService {
     }
 
     deleteGroup(id) {
-        return this.apiService.get('/services/group/delete-group', id)
+        return this.apiService.post('/services/group/delete-group', id)
             .pipe(map(
                 data => {
                     return data;
