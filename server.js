@@ -6,6 +6,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var passport = require('passport');
+var cors = require('cors');
 var http = require('http').Server(app);
 var io  = require('socket.io')(http);
 // configuration ===========================================
@@ -36,6 +37,8 @@ app.use(express.static(__dirname + '/client'));
 // routes ==================================================
 //require('./app/routes')(app); // configure our routes
 
+// CORS
+app.use(cors());
 
 // set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/client'));
