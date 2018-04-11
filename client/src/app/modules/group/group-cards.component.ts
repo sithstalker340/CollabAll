@@ -39,6 +39,8 @@ export class GroupCardsComponent {
     }
 
     getCards() {
+        this.cardSplices = [];
+
         this.groupService.getCardsForGroup(this.groupID)
             .subscribe(
                 data => {
@@ -59,8 +61,6 @@ export class GroupCardsComponent {
             this.groupService.deleteCard(id)
                 .subscribe(
                     data => {
-                        console.log(data);
-
                         this.getCards();
                     },
                     err => {
