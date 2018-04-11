@@ -23,10 +23,13 @@ export class DashboardComponent {
             .subscribe(
                 data => {
                     if (data.success) {
-                        this.rows = Math.ceil(data.groups.length / 4);
+                        let groups = data.groups;
+                        groups.sort(this.compare);
 
-                        for (let i = 0; i < data.groups.length; i += 4) {
-                            this.groupSplices.push(data.groups.slice(i, i + 4));
+                        this.rows = Math.ceil(groups.length / 4);
+
+                        for (let i = 0; i < groups.length; i += 4) {
+                            this.groupSplices.push(groups.slice(i, i + 4));
                         }
                     }
                 },
@@ -34,5 +37,17 @@ export class DashboardComponent {
                     console.log(err);
                 }
             );
+    }
+
+    compare(a, b) {
+        if (a.group.Name < b.group.Name) {
+            return -1;
+        }
+
+        if (a.group.Name > b.group.Name) {
+            return 1;
+        }
+
+        return 0;
     }
 }
