@@ -153,4 +153,16 @@ export class GroupService {
                 }
             ));
     }
+
+    deleteCard(id) {
+        return this.apiService.post('/services/card/delete-card', { CardId: id })
+            .pipe(map(
+                data => {
+                    return data;
+                },
+                err => {
+                    return err;
+                }
+            ));
+    }
 }
