@@ -42,16 +42,11 @@ export class GroupCardsComponent {
         this.groupService.getCardsForGroup(this.groupID)
             .subscribe(
                 data => {
-                    console.log(data);
-                    /*this.interjections = data.interjections;
-
-                    for (let i = 0; i < this.interjections.length; i++) {
-                        this.interjections[i].Icon = this.interjections[i].Icon.substring(6);
+                    this.cards = data.cards;
+                    
+                    for (let i = 0; i < this.cards.length; i += 4) {
+                        this.cardSplices.push(this.cards.slice(i, i + 4));
                     }
-
-                    for (let i = 0; i < this.interjections.length; i += 4) {
-                        this.interjectionSplices.push(this.interjections.slice(i, i + 4));
-                    }*/
                 },
                 err => {
                     console.log(err);
