@@ -44,7 +44,9 @@ export class CardManagementComponent {
             this.groupService.getCardByID(this.cardID)
                 .subscribe(
                     data => {
-                        console.log(data);
+                        this.cardTitle = data.card.Title;
+                        this.cardDescription = data.card.Description;
+                        this.title += ' (' + data.card.Title + ')';
                     },
                     err => {
                         console.log(err);
@@ -66,7 +68,35 @@ export class CardManagementComponent {
     saveCard() {
         if (this.validateForm()) {
             if (this.cardID !== '') {
+                this.groupService.updateCard({
+                    CardId: this.cardID,
+                    CardTitle: this.cardTitle,
+                    CardDescription: this.cardDescription,
+                    GroupId: this.groupID,
+                    UserId: this.user.ID
+                })
+                    .subscribe(
+                        data => {
+                            if (data.success) {
+                                this.alert.message = 'Your card has been updated! Redirecting you to the group cards in few seconds...';
 
+                                setTimeout((router: Router) => {
+                                    this.router.navigate(['/', 'group', this.groupID, 'cards']);
+                                }, 3000);
+
+                                this.alert.success = true;
+                                this.alert.failure = false;
+                            } else {
+                                this.alert.message = 'Your card was not updated...';
+
+                                this.alert.success = false;
+                                this.alert.failure = true;
+                            }
+                        },
+                        err => {
+                            console.log(err);
+                        }
+                    );
             } else {
                 this.groupService.createCard({
                     CardTitle: this.cardTitle,
