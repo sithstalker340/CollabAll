@@ -37,8 +37,19 @@
                     required>
             </div>
 
-            <div class="form-row">
+            <div class="form-row mb-3">
                 <div class="col">
+                    <div class="form-group">
+                        <label for="interjectionSound">Interjection Sound</label>
+                        <select class="form-control input-lg" [(ngModel)]="interjectionSound" name="interjectionSound" placeholder="Sound" required>
+                            <option value="button-09">Communicating</option>
+                            <option value="beep-09">Slow Down</option>
+                            <option value="button-37">Question</option>
+                            <option value="beep-07">Repeat</option>
+                            <option value="beep-10">Don't Understand</option>
+                        </select>
+                    </div>
+
                     <div class="form-group">
                         <label for="interjectionBackgroundColor">Interjection Button Background Color</label>
                         <input class="form-control" type="color" [(ngModel)]="nonInput.interjectionBackgroundColor" name="nonInput.interjectionBackgroundColor"
@@ -51,21 +62,31 @@
                         />
                     </div>
 
-                    <div class="form-group">
+                    <div [formGroup]="myFormGroup">
                         <label for="interjectionIcon">Interjection Icon</label>
-                        <!--<ui-iconpicker ng-model="interjectionIcon" onclick="this.classList.toggle('open');" id="interjectionIcon" name="interjectionIcon"></ui-iconpicker>-->
-                        <div class="iconpicker"></div>
+                        <div class="input-group">
+                            <span class="input-group-addon mr-3">
+                                <i [ngClass]="iconCss.value"></i>
+                            </span>
+                            <input type="text" name="iconCss" class="form-control" formControlName="iconCss" [iconPicker]="icon" [ipPosition]="'bottom'"
+                                [ipWidth]="'250px'" [ipPlaceHolder]="'Choose an icon'" [ipFallbackIcon]="fallbackIcon" (iconPickerSelect)="onIconPickerSelect($event)"
+                            />
+                        </div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-group">
                         <label for="interjectionButtonPreview">Button Preview</label>
                         <div class="btn btn-block hide-pointer" name="interjectionButtonPreview" [ngStyle]="{ 'background-color': nonInput.interjectionBackgroundColor, 'color': nonInput.interjectionTextColor }">
-                            <fa [name]="interjectionIcon" [size]=2></fa>
+                            <fa [name]="getIcon()" [size]=2></fa>
                             <br> {{interjectionTitle}}
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="form-group" *ngFor="let error of validation">
+                <label class="control-label">{{error}}</label>
             </div>
 
             <div class="row">

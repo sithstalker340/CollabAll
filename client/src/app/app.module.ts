@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { IconPickerModule } from 'ngx-icon-picker/dist/index';
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome';
 
 import { AppComponent } from './app.component';
@@ -58,6 +60,8 @@ import {
     AppRoutingModule,
     HttpClientModule,
     HttpModule,
+    ReactiveFormsModule,
+    IconPickerModule,
     Angular2FontawesomeModule
   ],
   providers: [

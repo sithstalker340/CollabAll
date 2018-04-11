@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { GroupService, UserService } from '../../shared';
@@ -15,11 +16,12 @@ export class InterjectionManagementComponent {
     interjectionID = '';
     interjectionTitle = '';
     interjectionDescription = '';
-    interjectionIcon = '';
+    interjectionIcon = 'fa fa-asterisk';
     interjectionColor = '';
     interjectionCaptionist = false;
     interjectionInterpreter = false;
     interjectionPosition = '';
+    interjectionSound = 'button-09';
     nonInput = {
         interjectionBackgroundColor: '#333333',
         interjectionTextColor: '#ffffff'
@@ -33,6 +35,11 @@ export class InterjectionManagementComponent {
         failure: false
     };
 
+    myFormGroup: FormGroup;
+    fallbackIcon = 'fa fa-book';
+    iconCss = new FormControl();
+    icon: string;
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -43,6 +50,8 @@ export class InterjectionManagementComponent {
     ngOnInit() {
         this.groupID = this.route.snapshot.params['id'];
         this.interjectionID = this.route.snapshot.params['interjectionID'];
+
+        this.myFormGroup = new FormGroup({ iconCss: this.iconCss });
 
         if (this.interjectionID === '') {
             this.title = 'Creating a New Interjection';
@@ -55,10 +64,11 @@ export class InterjectionManagementComponent {
                         this.interjectionID = data.interjection.ID;
                         this.interjectionTitle = data.interjection.Title;
                         this.interjectionDescription = data.interjection.Description;
-                        this.interjectionIcon = data.interjection.Icon.substring(6);
+                        this.interjectionIcon = data.interjection.Icon;
                         this.interjectionCaptionist = data.interjection.IncludeCaptionist;
                         this.interjectionInterpreter = data.interjection.IncludeInterpreter;
                         this.interjectionPosition = data.interjection.Position;
+                        this.interjectionSound = data.interjection.Sound;
                         this.nonInput.interjectionBackgroundColor = data.interjection.BackgroundColor;
                         this.nonInput.interjectionTextColor = data.interjection.TextColor;
                     },
@@ -79,76 +89,107 @@ export class InterjectionManagementComponent {
             );
     }
 
+    getIcon() {
+        return this.interjectionIcon.substring(6);
+    }
+
+    onIconPickerSelect(icon) {
+        this.iconCss.setValue(icon);
+        this.interjectionIcon = icon;
+    }
+
     saveInterjection() {
-        if (this.interjectionID !== '') {
-            this.groupService.updateInterjection({
-                GroupId: this.groupID,
-                GroupInterjectionId: this.interjectionID,
-                InterjectionTitle: this.interjectionTitle,
-                InterjectionDescription: this.interjectionDescription,
-                InterjectionIcon: this.interjectionIcon,
-                InterjectionBackgroundColor: this.nonInput.interjectionBackgroundColor,
-                InterjectionTextColor: this.nonInput.interjectionTextColor,
-                InterjectionCaptionist: this.interjectionCaptionist,
-                InterjectionInterpreter: this.interjectionInterpreter,
-                InterjectionPosition: this.interjectionPosition
-            })
-                .subscribe(
-                    data => {
-                        if (data.success) {
-                            this.alert.message = 'Your interjection has been updated! Redirecting you to the group interjections in few seconds...';
+        if (this.validateForm()) {
+            if (this.interjectionID !== '') {
+                this.groupService.updateInterjection({
+                    GroupId: this.groupID,
+                    GroupInterjectionId: this.interjectionID,
+                    InterjectionTitle: this.interjectionTitle,
+                    InterjectionDescription: this.interjectionDescription,
+                    InterjectionIcon: this.interjectionIcon,
+                    InterjectionBackgroundColor: this.nonInput.interjectionBackgroundColor,
+                    InterjectionTextColor: this.nonInput.interjectionTextColor,
+                    InterjectionCaptionist: this.interjectionCaptionist,
+                    InterjectionInterpreter: this.interjectionInterpreter,
+                    InterjectionPosition: this.interjectionPosition,
+                    interjectionSound: this.interjectionSound
+                })
+                    .subscribe(
+                        data => {
+                            if (data.success) {
+                                this.alert.message = 'Your interjection has been updated! Redirecting you to the group interjections in few seconds...';
 
-                            setTimeout((router: Router) => {
-                                this.router.navigate(['/', 'group', this.groupID, 'interjections']);
-                            }, 3000);
+                                setTimeout((router: Router) => {
+                                    this.router.navigate(['/', 'group', this.groupID, 'interjections']);
+                                }, 3000);
 
-                            this.alert.success = true;
-                            this.alert.failure = false;
-                        } else {
-                            this.alert.message = 'Your interjection was not updated...';
+                                this.alert.success = true;
+                                this.alert.failure = false;
+                            } else {
+                                this.alert.message = 'Your interjection was not updated...';
 
-                            this.alert.success = false;
-                            this.alert.failure = true;
+                                this.alert.success = false;
+                                this.alert.failure = true;
+                            }
+                        },
+                        err => {
+                            console.log(err);
                         }
-                    },
-                    err => {
-                        console.log(err);
-                    }
-                );
-        } else {
-            this.groupService.createInterjection({
-                GroupId: this.groupID,
-                InterjectionTitle: this.interjectionTitle,
-                InterjectionDescription: this.interjectionDescription,
-                InterjectionIcon: this.interjectionIcon,
-                InterjectionBackgroundColor: this.nonInput.interjectionBackgroundColor,
-                InterjectionTextColor: this.nonInput.interjectionTextColor,
-                InterjectionCaptionist: this.interjectionCaptionist,
-                InterjectionInterpreter: this.interjectionInterpreter,
-                InterjectionPosition: this.interjectionPosition
-            })
-                .subscribe(
-                    data => {
-                        if (data.success) {
-                            this.alert.message = 'Your interjection has been created! Redirecting you to the group interjections in few seconds...';
+                    );
+            } else {
+                this.groupService.createInterjection({
+                    GroupId: this.groupID,
+                    InterjectionTitle: this.interjectionTitle,
+                    InterjectionDescription: this.interjectionDescription,
+                    InterjectionIcon: this.interjectionIcon,
+                    InterjectionBackgroundColor: this.nonInput.interjectionBackgroundColor,
+                    InterjectionTextColor: this.nonInput.interjectionTextColor,
+                    InterjectionCaptionist: this.interjectionCaptionist,
+                    InterjectionInterpreter: this.interjectionInterpreter,
+                    InterjectionPosition: this.interjectionPosition,
+                    InterjectionSound: this.interjectionSound
+                })
+                    .subscribe(
+                        data => {
+                            if (data.success) {
+                                this.alert.message = 'Your interjection has been created! Redirecting you to the group interjections in few seconds...';
 
-                            setTimeout((router: Router) => {
-                                this.router.navigate(['/', 'group', this.groupID, 'interjections']);
-                            }, 3000);
+                                setTimeout((router: Router) => {
+                                    this.router.navigate(['/', 'group', this.groupID, 'interjections']);
+                                }, 3000);
 
-                            this.alert.success = true;
-                            this.alert.failure = false;
-                        } else {
-                            this.alert.message = 'Your interjection was not created...';
+                                this.alert.success = true;
+                                this.alert.failure = false;
+                            } else {
+                                this.alert.message = 'Your interjection was not created...';
 
-                            this.alert.success = false;
-                            this.alert.failure = true;
+                                this.alert.success = false;
+                                this.alert.failure = true;
+                            }
+                        },
+                        err => {
+                            console.log(err);
                         }
-                    },
-                    err => {
-                        console.log(err);
-                    }
-                );
+                    );
+            }
         }
+    }
+
+    validateForm() {
+        this.validation = [];
+
+        if (this.interjectionTitle.length === 0) {
+            this.validation.push('Interjection Title is a required field.');
+        }
+
+        if (this.interjectionDescription.length === 0) {
+            this.validation.push('Interjection Description is a required field.');
+        }
+
+        if (this.interjectionPosition.length === 0) {
+            this.validation.push('Interjection Position is a required field.');
+        }
+
+        return (this.validation.length == 0);
     }
 }

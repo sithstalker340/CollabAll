@@ -114,6 +114,16 @@ export class GroupChatComponent {
     }
 
     appendChat(message) {
+        let sound;
+
+        if (message.body.Title === 'Communicating!') {
+            sound = document.getElementById('button-09');
+        } else {
+            sound = document.getElementById(message.body.Sound);
+        }
+
+        console.log(message.body.Sound);
+
         this.messages.push(message);
 
         if (message.body.includes === undefined && message.body.Title === 'Communicating!') {
@@ -122,6 +132,11 @@ export class GroupChatComponent {
 
         if (message.body.includes !== undefined && message.body.includes('Discussing:')) {
             this.currentCard = message.body.replace('Discussing:', '');
+        }
+        
+        if (this.user.FirstName + ' ' + this.user.LastName !== message.user && message.body.Title !== undefined) {
+            sound.play();
+            console.log('sound played');
         }
     }
 
