@@ -1,1 +1,83 @@
-interjection-manage.component
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/']">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a [routerLink]="['/', 'group', groupID, 'interjections']">{{ group.Name }} - Group Interjections</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+</nav>
+
+<div class="alert" [ngClass]='{"alert-success": alert.success, "alert-warning": alert.failure }' *ngIf='alert.message.length > 0'>
+    {{ alert.message }}
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{ group.Name }} - Group Interjections: {{ title }}</h5>
+
+        <form (ngSubmit)="saveInterjection()">
+            <div class="form-group">
+                <label for="interjectionTitle">Interjection Title</label>
+                <input type="text" class="form-control input-lg" name="interjectionTitle" [(ngModel)]="interjectionTitle" placeholder="Title"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label for="interjectionDescription">Interjection Description</label>
+                <textarea name="interjectionDescription" class="form-control input-lg" [(ngModel)]="interjectionDescription" placeholder="Description"
+                    style="height:150px" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="interjectionPosition">Interjection Position</label>
+                <input type="number" class="form-control input-lg" [(ngModel)]="interjectionPosition" name="interjectionPosition" placeholder="Position"
+                    required>
+            </div>
+
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="interjectionBackgroundColor">Interjection Button Background Color</label>
+                        <input class="form-control" type="color" [(ngModel)]="nonInput.interjectionBackgroundColor" name="nonInput.interjectionBackgroundColor"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interjectionTextColor">Interjection Button Text Color</label>
+                        <input class="form-control" type="color" [(ngModel)]="nonInput.interjectionTextColor" name="nonInput.interjectionTextColor"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="interjectionIcon">Interjection Icon</label>
+                        <!--<ui-iconpicker ng-model="interjectionIcon" onclick="this.classList.toggle('open');" id="interjectionIcon" name="interjectionIcon"></ui-iconpicker>-->
+                        <div class="iconpicker"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="interjectionButtonPreview">Button Preview</label>
+                        <div class="btn btn-block hide-pointer" name="interjectionButtonPreview" [ngStyle]="{ 'background-color': nonInput.interjectionBackgroundColor, 'color': nonInput.interjectionTextColor }">
+                            <fa [name]="interjectionIcon" [size]=2></fa>
+                            <br> {{interjectionTitle}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <a [routerLink]="['/', 'group', groupID, 'interjections']">
+                        <button class="btn btn-primary btn-no-borders">Cancel</button>
+                    </a>
+                </div>
+                <div class="col text-right">
+                    <button type="submit" class="btn btn-primary btn-no-borders">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

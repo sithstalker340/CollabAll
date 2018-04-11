@@ -104,6 +104,18 @@ export class GroupService {
 
     // Interjections
 
+    getInterjectionByID(id) {
+        return this.apiService.get('/services/interjection/get-interjection-by-id-for-group?GroupInterjectionId=' + id)
+            .pipe(map(
+                data => {
+                    return data;
+                },
+                err => {
+                    return err;
+                }
+            ));
+    }
+
     getInterjectionsForGroup(id) {
         return this.apiService.get('/services/interjection/get-interjections-for-group?GroupId=' + id)
             .pipe(map(
@@ -118,6 +130,30 @@ export class GroupService {
 
     setDefaultInterjectionsForGroup(id) {
         return this.apiService.post('/services/interjection/set-default-interjections-for-group', id)
+            .pipe(map(
+                data => {
+                    return data;
+                },
+                err => {
+                    return err;
+                }
+            ));
+    }
+
+    createInterjection(interjection) {
+        return this.apiService.post('/services/interjection/create-interjections-for-group', interjection)
+            .pipe(map(
+                data => {
+                    return data;
+                },
+                err => {
+                    return err;
+                }
+            ));
+    }
+
+    updateInterjection(interjection) {
+        return this.apiService.post('/services/interjection/update-interjections-for-group', interjection)
             .pipe(map(
                 data => {
                     return data;
