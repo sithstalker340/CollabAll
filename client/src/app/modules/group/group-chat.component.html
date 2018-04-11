@@ -33,7 +33,9 @@
                             </div>
                             <div>
                                 <span *ngIf="doesItStartWith(message.body, 'Discussing:')">
-                                    <i style="opacity: 1;width: 40px;margin: 2px;" class='fa fa-window-maximize fa-lg btn btn-default' aria-hidden='true' disabled></i>
+                                    <div class="message-icon" [ngStyle]="{ 'background-color': message.body.BackgroundColor, 'color': message.body.TextColor }">
+                                        <fa name="window-maximize" [size]=0.5></fa>
+                                    </div>
                                     {{message.body}}
                                 </span>
 
