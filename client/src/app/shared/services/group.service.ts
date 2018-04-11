@@ -142,8 +142,44 @@ export class GroupService {
 
     // Cards
 
+    getCardByID(id) {
+        return this.apiService.get('/services/card/get-card-by-id?CardId=' + id)
+            .pipe(map(
+                data => {
+                    return data;
+                },
+                err => {
+                    return err;
+                }
+            ));
+    }
+
     getCardsForGroup(id) {
         return this.apiService.get('/services/card/get-cards-for-group?GroupId=' + id)
+            .pipe(map(
+                data => {
+                    return data;
+                },
+                err => {
+                    return err;
+                }
+            ));
+    }
+
+    createCard(card) {
+        return this.apiService.post('/services/card/create-card', card)
+            .pipe(map(
+                data => {
+                    return data;
+                },
+                err => {
+                    return err;
+                }
+            ));
+    }
+
+    updateCard(card) {
+        return this.apiService.post('/services/card/update-card', card)
             .pipe(map(
                 data => {
                     return data;
