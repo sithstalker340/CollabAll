@@ -49,10 +49,10 @@
             setGroupDefaultInterjections: function (request, response) {
                 var groupId = request.body.GroupId;
                 return GroupInterjectionModel.bulkCreate([
-                    {groupID:groupId, Position:0, Title: 'Slow Down!', Description: 'Slow Down!', Icon:'fa fa-stop', BackgroundColor:'#5bc0de',TextColor:'#fff',IncludeCaptionist:true,IncludeInterpreter:true,IsActive:true,Sound:'beep-09'},
-                    {groupID:groupId, Position:1, Title: 'Question!', Description: 'Question!', Icon:'fa fa-question', BackgroundColor:'#f0ad4e',TextColor:'#fff',IncludeCaptionist:true,IncludeInterpreter:true,IsActive:true, Sound:'button-37'},
+                    {groupID:groupId, Position:0, Title: 'Slow Down!', Description: 'Slow Down!', Icon:'fa fa-stop', BackgroundColor:'#5bc0de',TextColor:'#fff',IncludeCaptionist:true,IncludeInterpreter:true,IsActive:true,Sound:'beep-07'},
+                    {groupID:groupId, Position:1, Title: 'Question!', Description: 'Question!', Icon:'fa fa-question', BackgroundColor:'#f0ad4e',TextColor:'#fff',IncludeCaptionist:true,IncludeInterpreter:true,IsActive:true, Sound:'beep-07'},
                     {groupID:groupId, Position:2, Title: 'Repeat!', Description: 'Question!', Icon:'fa fa-repeat', BackgroundColor:'#3ca2e0',TextColor:'#fff',IncludeCaptionist:true,IncludeInterpreter:true,IsActive:true, Sound:'beep-07'},
-                    {groupID:groupId, Position:3, Title: 'Don\'t Understand!', Description: 'Don\'t Understand!', Icon:'fa fa-exclamation', BackgroundColor:'#d9534f',TextColor:'#fff',IncludeCaptionist:true,IncludeInterpreter:true,IsActive:true, Sound:'beep-10'},
+                    {groupID:groupId, Position:3, Title: 'Don\'t Understand!', Description: 'Don\'t Understand!', Icon:'fa fa-exclamation', BackgroundColor:'#d9534f',TextColor:'#fff',IncludeCaptionist:true,IncludeInterpreter:true,IsActive:true, Sound:'beep-07'},
                 ]).then(function (data) {
                     response.send({success: true, interjection: data});
                 });
